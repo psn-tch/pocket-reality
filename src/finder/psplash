@@ -1,0 +1,4 @@
+#!/bin/sh
+# Replaces JLime's splash at startup and shutdown with the Pocket Reality screen.
+[ -x /usr/bin/pocketsplash ] && /usr/bin/pocketsplash
+exit 0

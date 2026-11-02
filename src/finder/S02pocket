@@ -1,0 +1,26 @@
+#!/bin/sh
+# Mounts the card's story partition and starts the Pocket Reality desktop.
+
+M=/media/pocket
+export POCKET_DICT=/usr/share/pocket/words.txt
+
+mkdir -p $M
+mount -t vfat /dev/hda1 $M || {
+	/usr/bin/pocketsplash --text
+	echo "pocket: could not mount /dev/hda1"
+	exit 0
+}
+
+/usr/bin/finder
+status=$?
+sync
+if [ $status -eq 10 ]; then
+	umount $M
+	poweroff
+	exit 0
+fi
+
+# Everything else, including a crash, ends at the login prompt.
+umount $M
+/usr/bin/pocketsplash --text
+exit 0

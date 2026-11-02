@@ -1,0 +1,19 @@
+#!/bin/sh
+# Runs the hardware probe once per boot and leaves its results on the FAT
+# partition, so they can be read on a PC.
+
+M=/media/pocket
+mkdir -p $M
+if ! mount -t vfat /dev/hda1 $M; then
+	echo "probe: could not mount /dev/hda1, logging to /root only"
+	M=/home/root
+fi
+
+dmesg > $M/dmesg.txt
+/usr/bin/probe $M/probe.txt 30
+cat /proc/partitions > $M/parts.txt
+cat /proc/fb >> $M/parts.txt
+sync
+[ "$M" = /media/pocket ] && umount $M
+echo "probe finished: safe to log in or power off"
+exit 0

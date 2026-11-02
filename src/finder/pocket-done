@@ -1,0 +1,4 @@
+#!/bin/sh
+# Last shutdown step: everything is written and unmounted, so say so.
+[ -x /usr/bin/pocketsplash ] && /usr/bin/pocketsplash --done
+exit 0

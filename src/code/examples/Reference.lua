@@ -1,0 +1,32 @@
+-- Everything Pocket Code adds to Lua. This one is for reading, not running.
+--
+-- Ctrl+R runs the program. Esc stops it. A problem jumps to its line.
+--
+-- DRAWING  Nothing appears until show(), waitkey() or wait().
+--   cls(color)                  clear the screen
+--   pixel(x, y, color)          one dot
+--   line(x1, y1, x2, y2, color)
+--   rect(x, y, w, h, color)     an outline
+--   fill(x, y, w, h, color)     a solid box
+--   text(x, y, words, color)    gives back where the words ended
+--   show()                      put it all on the screen
+--
+-- COLORS   BLACK WHITE GRAY RED GREEN BLUE YELLOW PURPLE, or rgb(r, g, b) from 0 to 255
+-- SIZE     WIDTH and HEIGHT are 640 and 240
+--
+-- INPUT
+--   key()      the next key, or nil if nothing was pressed
+--   waitkey()  waits for a key. A stylus tap gives "tap", x, y
+--   Keys are letters, or enter, backspace, delete, tab, up, down, left, right,
+--   home, end, pageup, pagedown
+--
+-- TIME
+--   wait(ms)   pause, in thousandths of a second
+--   ticks()    a clock in thousandths of a second
+--
+-- TEXT
+--   print(...) writes lines at the top of the screen
+--
+-- Whole numbers are fast. Numbers with a decimal point are slow here, and
+-- whole numbers stop at about two billion. A program can use 5 MB of memory.
+print("Reference.lua is for reading. Press Esc, then scroll through it.")

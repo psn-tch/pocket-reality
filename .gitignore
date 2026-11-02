@@ -1,0 +1,23 @@
+# Commercial game data: lives on the card only, never in a repository.
+*.wad
+*.WAD
+*.iwad
+*.pwad
+
+# Third-party downloads and everything generated from them.
+vendor/
+tools/
+build/
+*.img
+
+# Debug builds of Doom, and anything converted from private art.
+*.debug
+private/
+*.wl1
+*.WL1
+*.wl6
+*.WL6
+
+# Working notes and logs from one person's machine.
+NOTES.md
+results/

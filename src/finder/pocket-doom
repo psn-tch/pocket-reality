@@ -1,0 +1,33 @@
+#!/bin/sh
+# Runs the Doom speed test from the desktop, at every size and for each build.
+
+D=${POCKET_ROOT:-/media/pocket}/doom
+WAD=$D/Doomu.wad
+[ -f "$WAD" ] || WAD=$D/freedoom1.wad
+
+bench() {
+	echo "=== desktop ${2:-pdoom} $1" >> results.txt
+	POCKET_BENCH=300 "/usr/bin/${2:-pdoom}" -iwad "$WAD" -mb 6 -nogui -pmode "$1" -pblocks 10 -pdetail 0 \
+		-timedemo demo3 2>&1 | grep -E 'bench:|rror|crash' >> results.txt
+}
+
+cd "$D" || exit 1
+for mode in box tall wide fit; do
+	bench $mode
+done
+# Alternative compiler settings, compared at the normal size.
+for build in pdoom-o3 pdoom-os; do
+	[ -x "/usr/bin/$build" ] && bench box $build
+done
+
+# Wolfenstein's recorded demo, past its "Press a key" screen.
+if cd "${POCKET_ROOT:-/media/pocket}/wolf3d" 2> /dev/null && [ -x /usr/bin/pwolf ]; then
+	printf '2000 13 1\n2100 13 0\n' > bench.key
+	for mode in box tall wide fit; do
+		echo "=== wolf $mode" >> "$D/results.txt"
+		POCKET_KEYS=bench.key POCKET_BENCH=300 /usr/bin/pwolf --demotest -pmode "$mode" 2>&1 |
+			grep -E 'bench:|rror' >> "$D/results.txt"
+	done
+	rm -f bench.key
+fi
+sync
